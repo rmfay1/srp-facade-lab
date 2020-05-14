@@ -17,10 +17,13 @@ public class RpgPlayer {
 
     private List<Item> inventory;
 
+    private RpgPlayer player;
+
     // How much the player can carry in pounds
     private int carryingCapacity;
 
-    public RpgPlayer(IGameEngine gameEngine) {
+    public RpgPlayer(IGameEngine gameEngine, RpgPlayer player) {
+        this.player = player;
         this.gameEngine = gameEngine;
         inventory = new ArrayList<Item>();
         carryingCapacity = MAX_CARRYING_CAPACITY;
@@ -73,27 +76,27 @@ public class RpgPlayer {
 //        return true;
 //    }
 
-    public void calculateStats() {
-        for (Item i: inventory) {
-            armour += i.getArmour();
-        }
-    }
-
-    public boolean checkIfItemExistsInInventory(Item item) {
-        for (Item i: inventory) {
-            if (i.getId() == item.getId())
-                return true;
-        }
-        return false;
-    }
-
-    public int calculateInventoryWeight() {
-        int sum=0;
-        for (Item i: inventory) {
-            sum += i.getWeight();
-        }
-        return sum;
-    }
+//    public void calculateStats() {
+//        for (Item i: inventory) {
+//            armour += i.getArmour();
+//        }
+//    }
+//
+//    public boolean checkIfItemExistsInInventory(Item item) {
+//        for (Item i: inventory) {
+//            if (i.getId() == item.getId())
+//                return true;
+//        }
+//        return false;
+//    }
+//
+//    public int calculateInventoryWeight() {
+//        int sum=0;
+//        for (Item i: inventory) {
+//            sum += i.getWeight();
+//        }
+//        return sum;
+//    }
 
 //    public void takeDamage(int damage) {
 //
@@ -115,7 +118,21 @@ public class RpgPlayer {
 //
 //        gameEngine.playSpecialEffect("lots_of_gore");
 //    }
+    public int calculateInventoryWeight()
+    {
+        int sum=0;
+        for (Item i: this.player.getInventory())
+        {
+            sum += i.getWeight();
+        }
+        return sum;
+    }
+
     public void addToInventory(Item item) { inventory.add(item); }
+
+    public List<Item> getInventory() { return this.inventory; }
+
+    public void setInventory(Item item) {this.inventory.add(item);}
 
     public int getHealth() {
         return health;
@@ -137,7 +154,7 @@ public class RpgPlayer {
         return armour;
     }
 
-    private void setArmour(int armour) {
+    public void setArmour(int armour) {
         this.armour = armour;
     }
 
@@ -145,7 +162,7 @@ public class RpgPlayer {
         return carryingCapacity;
     }
 
-    private void setCarryingCapacity(int carryingCapacity) {
+    public void setCarryingCapacity(int carryingCapacity) {
         this.carryingCapacity = carryingCapacity;
     }
 
